@@ -1,0 +1,23 @@
+{
+  "name": "telegram-vercel",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "local": "vercel dev",
+    "cpolar": "cpolar http 3000",
+    "serve": "vite",
+    "build": "tsc --noEmit && vite build",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "@types/node": "^18.13.0",
+    "@vercel/node": "^1.14.1",
+    "typescript": "^4.9.5"
+  },
+  "dependencies": {
+    "telegraf": "^4.11.2",
+    "vite": "^4.1.1"
+  }
+}
