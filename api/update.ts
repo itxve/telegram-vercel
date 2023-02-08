@@ -1,16 +1,30 @@
 import type { VercelRequest, VercelResponse } from "@vercel/node";
-import { Message, Update } from "telegraf/types";
-import { Telegram } from "telegraf";
-const { TELEGRAM_TOKEN, VERCEL_URL } = process.env;
+const TOKEN_HEADER = "x-telegram-bot-api-secret-token";
+const { TELEGRAM_TOKEN, SECRET_TOKEN } = process.env;
+import { Telegraf } from "telegraf";
+import { message } from "telegraf/filters";
 
 export default async function (req: VercelRequest, res: VercelResponse) {
   res.setHeader("Access-Control-Allow-Origin", "*");
-  const { message }: { message: Message } = req.body;
-  console.log("message:", message);
-  const TELEGRAM_TOKEN = "6101132909:AAG7QrJ2aZBUMFWjG5x8zDJVBb2MyPGbXe8";
-  const bot = new Telegram(TELEGRAM_TOKEN);
-  await bot.sendMessage(message.chat.id, `${Date.now()}`, {
-    reply_to_message_id: message.message_id,
+  if (SECRET_TOKEN == req.headers[TOKEN_HEADER]) {
+    const bot = new Telegraf(TELEGRAM_TOKEN!);
+    //register some handel
+    replayMessage(bot);
+    //
+    await bot.handleUpdate(req.body);
+    res.status(200).send("ok");
+  } else {
+    res.status(409).send("非法请求");
+  }
+}
+/**
+ * @回复消息示例
+ * @param bot
+ */
+function replayMessage(bot: Telegraf) {
+  bot.on(message("text"), async (ctx) => {
+    await ctx.replyWithHTML(`you say: <em><b>${ctx.message.text}</b></em>`, {
+      reply_to_message_id: ctx.message.message_id,
+    });
   });
-  res.send(200);
 }
