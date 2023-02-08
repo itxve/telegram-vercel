@@ -11,6 +11,7 @@ export default async function (req: VercelRequest, res: VercelResponse) {
       hookPath: "/api/update",
     },
   });
+  console.log(`domain：https://${VERCEL_URL! as string}`);
 
   res.status(200).send({
     VERCEL_URL: `https://${VERCEL_URL! as string}`,
