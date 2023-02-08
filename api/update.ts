@@ -1,6 +1,8 @@
 import type { VercelRequest, VercelResponse } from "@vercel/node";
 import { Message, Update } from "telegraf/types";
 import { Telegram } from "telegraf";
+const { TELEGRAM_TOKEN, VERCEL_URL } = process.env;
+
 export default async function (req: VercelRequest, res: VercelResponse) {
   res.setHeader("Access-Control-Allow-Origin", "*");
   const { message }: { message: Message } = req.body;

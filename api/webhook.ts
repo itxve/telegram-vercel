@@ -12,5 +12,5 @@ export default async function (req: VercelRequest, res: VercelResponse) {
       hookPath: "/api/update",
     },
   });
-  res.status(200).send({ VERCEL_URL, TELEGRAM_TOKEN });
+  res.status(200).send({ env: process.env });
 }
