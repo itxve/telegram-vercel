@@ -1,6 +1,5 @@
 import type { VercelRequest, VercelResponse } from "@vercel/node";
 const { TELEGRAM_TOKEN, VERCEL_URL } = process.env;
-
 import { Telegraf } from "telegraf";
 
 export default async function (req: VercelRequest, res: VercelResponse) {
@@ -8,9 +7,12 @@ export default async function (req: VercelRequest, res: VercelResponse) {
   const bot = new Telegraf(TELEGRAM_TOKEN!);
   bot.launch({
     webhook: {
-      domain: VERCEL_URL! as string,
+      domain: `https://${VERCEL_URL! as string}`,
       hookPath: "/api/update",
     },
   });
-  res.status(200).send({ env: process.env });
+
+  res.status(200).send({
+    VERCEL_URL: `https://${VERCEL_URL! as string}`,
+  });
 }
