@@ -9,13 +9,11 @@ import { ChatGPTAPI } from "chatgpt";
 export default async function (req: VercelRequest, res: VercelResponse) {
   res.setHeader("Access-Control-Allow-Origin", "*");
   if (SECRET_TOKEN == req.headers[TOKEN_HEADER]) {
-    const bot = new Telegraf(TELEGRAM_TOKEN!, { handlerTimeout: 4500 });
-    //register some handel
-    replayMessage(bot);
-    //
-    console.log(req.body);
-
-    await bot.handleUpdate(req.body);
+    try {
+      const bot = new Telegraf(TELEGRAM_TOKEN!, { handlerTimeout: 4500 });
+      replayMessage(bot);
+      await bot.handleUpdate(req.body);
+    } catch (error) {}
     res.status(200).send("ok");
   } else {
     res.status(409).send("非法请求");
