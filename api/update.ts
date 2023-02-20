@@ -9,7 +9,7 @@ import { ChatGPTAPI } from "chatgpt";
 export default async function (req: VercelRequest, res: VercelResponse) {
   res.setHeader("Access-Control-Allow-Origin", "*");
   if (SECRET_TOKEN == req.headers[TOKEN_HEADER]) {
-    const bot = new Telegraf(TELEGRAM_TOKEN!, { handlerTimeout: 4.5 });
+    const bot = new Telegraf(TELEGRAM_TOKEN!, { handlerTimeout: 4500 });
     //register some handel
     replayMessage(bot);
     //
