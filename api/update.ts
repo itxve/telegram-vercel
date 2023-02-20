@@ -27,6 +27,9 @@ export default async function (req: VercelRequest, res: VercelResponse) {
  */
 function replayMessage(bot: Telegraf) {
   bot.on(message("text"), async (ctx) => {
+    if (ctx.message.text == "/start") {
+      return;
+    }
     if (ctx.message.text == "chatid") {
       await ctx.replyWithHTML(`you chatid is: <em><b>${ctx.chat.id}</b></em>`, {
         reply_to_message_id: ctx.message.message_id,
