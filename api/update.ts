@@ -37,13 +37,9 @@ function replayMessage(bot: Telegraf) {
           apiKey: CHATGPT_TOKEN!,
         });
         const res = await chatApi.sendMessage(ctx.message.text);
-        await ctx.replyWithHTML(`<em><b>${res.text}</b></em>`, {
-          reply_to_message_id: ctx.message.message_id,
-        });
+        await ctx.replyWithHTML(`<em><b>${res.text}</b></em>`);
       } catch (error) {
-        await ctx.replyWithHTML(`<em><b>chatgpt api error ${error}</b></em>`, {
-          reply_to_message_id: ctx.message.message_id,
-        });
+        await ctx.replyWithHTML(`<em><b>chatgpt api error:  ${error}</b></em>`);
       }
     }
   });
