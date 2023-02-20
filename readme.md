@@ -6,7 +6,7 @@
 
 ## Vercel 部署
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fitxve%2Ftelegram-vercel&env=TELEGRAM_TOKEN,SECRET_TOKEN)
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fitxve%2Ftelegram-vercel&env=TELEGRAM_TOKEN,SECRET_TOKEN,CHATGPT_TOKEN)
 
 # 部署后使用步骤
 
