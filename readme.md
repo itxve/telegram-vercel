@@ -2,6 +2,8 @@
 
 使用 Vercel 部署 Telegram 简单示例
 
+### 增加 chatgpt(不支持上下文)
+
 ## Vercel 部署
 
 [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fitxve%2Ftelegram-vercel&env=TELEGRAM_TOKEN,SECRET_TOKEN)

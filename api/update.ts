@@ -1,8 +1,10 @@
 import type { VercelRequest, VercelResponse } from "@vercel/node";
 const TOKEN_HEADER = "x-telegram-bot-api-secret-token";
-const { TELEGRAM_TOKEN, SECRET_TOKEN } = process.env;
+const { TELEGRAM_TOKEN, SECRET_TOKEN, CHATGPT_TOKEN } = process.env;
 import { Telegraf } from "telegraf";
 import { message } from "telegraf/filters";
+const apiKey = "";
+import { ChatGPTAPI } from "chatgpt";
 
 export default async function (req: VercelRequest, res: VercelResponse) {
   res.setHeader("Access-Control-Allow-Origin", "*");
@@ -11,6 +13,8 @@ export default async function (req: VercelRequest, res: VercelResponse) {
     //register some handel
     replayMessage(bot);
     //
+    console.log(req.body);
+
     await bot.handleUpdate(req.body);
     res.status(200).send("ok");
   } else {
@@ -23,8 +27,18 @@ export default async function (req: VercelRequest, res: VercelResponse) {
  */
 function replayMessage(bot: Telegraf) {
   bot.on(message("text"), async (ctx) => {
-    await ctx.replyWithHTML(`you say: <em><b>${ctx.message.text}</b></em>`, {
-      reply_to_message_id: ctx.message.message_id,
-    });
+    if (ctx.message.text == "chatid") {
+      await ctx.replyWithHTML(`you chatid is: <em><b>${ctx.chat.id}</b></em>`, {
+        reply_to_message_id: ctx.message.message_id,
+      });
+    } else {
+      const chatApi = new ChatGPTAPI({
+        apiKey: CHATGPT_TOKEN!,
+      });
+      const res = await chatApi.sendMessage(ctx.message.text);
+      await ctx.replyWithHTML(`<em><b>${res.text}</b></em>`, {
+        reply_to_message_id: ctx.message.message_id,
+      });
+    }
   });
 }
