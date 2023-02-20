@@ -32,13 +32,19 @@ function replayMessage(bot: Telegraf) {
         reply_to_message_id: ctx.message.message_id,
       });
     } else {
-      const chatApi = new ChatGPTAPI({
-        apiKey: CHATGPT_TOKEN!,
-      });
-      const res = await chatApi.sendMessage(ctx.message.text);
-      await ctx.replyWithHTML(`<em><b>${res.text}</b></em>`, {
-        reply_to_message_id: ctx.message.message_id,
-      });
+      try {
+        const chatApi = new ChatGPTAPI({
+          apiKey: CHATGPT_TOKEN!,
+        });
+        const res = await chatApi.sendMessage(ctx.message.text);
+        await ctx.replyWithHTML(`<em><b>${res.text}</b></em>`, {
+          reply_to_message_id: ctx.message.message_id,
+        });
+      } catch (error) {
+        await ctx.replyWithHTML(`<em><b>chatgpt api error ${error}</b></em>`, {
+          reply_to_message_id: ctx.message.message_id,
+        });
+      }
     }
   });
 }
